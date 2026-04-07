@@ -116,6 +116,25 @@
 - 이미지, 동영상, 로그파일, 백업 등 어떤 파일이든 저장 가능
 - 용량 제한 X, 저장한 만큼 비용 지불
 </details>
+
+<details>
+<summary>AWS IAM</summary>
+
+1. **IAM (Identity and Access Management)**
+- 개념
+  - AWS 리소스에 대한 접근 권한을 관리하는 서비스
+  - "누가, 어떤 서비스에, 어떤 행동을 할 수 있는가"를 정의
+- 구성요소
+  - **User** : AWS 계정 안의 개별 사용자
+  - **Group** : 여러 User를 묶어서 권한을 일괄 적용
+  - **Role** : EC2, Lambda 같은 AWS 서비스에 부여하는 권한
+  - **Policy** : 허용/거부할 행동을 정의한 JSON 문서, User/Group/Role에 붙여서 사용
+- 특징
+  - Root 계정은 모든 권한을 가지므로 일상적인 작업엔 사용 X
+  - 최소 권한 원칙 : 필요한 권한만 부여하는 것이 보안 기본
+  - MFA(다중 인증) 설정 권장
+</details>
+
 <details>
 <summary>AWS 인프라 환경</summary>
 
@@ -126,22 +145,22 @@
   - 사용자와 물리적으로 가까울 수록 응답 빠름
   - 법적 규제
   - 서비스 가격 (요금이 리전마다 다름)
-2. **Availability Zone**
+1. **Availability Zone**
 - 리전 안에 있는 실제 데이터센터 단위
 - 하나의 리전에 최소 3개 AZ있음
 - AZ끼리는 물리적으로 수십km 떨어짐
 - 전용 광케이블로 연결되있어서 인터넷 빠름
-3. **Edge Location**
+1. **Edge Location**
 - 리전/AZ와 완전히 별개로 전 세계에 퍼져 있는 캐시 서버
 - 주로 CloudFront가 여기서 동작
 - **CloudFront**란?
   - AWS에서 제공되는 고속 콘텐즈 전송 네트워크 서비스
-4. **VPC**
+1. **VPC**
 - (Virtual Private Cloud)
 - AWS 안에서 나만의 격리된 네트워크 공간
 - 외부에서 함부로 접근 불가
 - 리전 단위로 생성
-5. **서브넷**
+1. **서브넷**
 - VPC를 용도별로 쪼갠 구역
 - **Public Subnet** : 인터넷 연결 가능 -> 웹 서버, 로드 밸런서
 - **Private Subnet** : 인터넷 차단 -> DB, 내부 API
@@ -209,7 +228,20 @@
 - 증분 백업 방식
   - 처음에만 전체 저장, 이후엔 변경된 부분만 저장
   - 저장 공간 효율적
+6. **RDS**
+- (Relational Database Service)
+- 개념
+  - AWS에서 제공하는 관계형 데이터베이스 관리형 서비스
+  - MySQL, PostgreSQL, MariaDB, Oracle 등 지원
+- 특징
+  - 자동 백업, 자동 패치, 장애 복구 AWS가 담당
+  - **Multi-AZ** : 다른 AZ에 복제본을 두어 장애 시 자동 전환
+  - **Read Replica** : 읽기 전용 복제본을 두어 DB 부하 분산
+  - EC2에 직접 DB 설치하는 것과의 차이
+    - EC2 직접 설치 : 백업/패치/복구 전부 직접 관리
+    - RDS : AWS가 인프라 관리, 개발자는 쿼리에만 집중
 </details>
+
 <details>
 <summary>AWS 네트워크</summary>
 
@@ -335,7 +367,7 @@
     - Ruby
     - PHP
 ### Networking Service
-1. **Amazon ELB**
+#### **Amazon ELB**
 - 개념
   - 들어오는 네트워크 트래픽을 여러 서버에 자동으로 분산 시켜 주는 AWS 관리형 로드 밸런서
 - 특징
